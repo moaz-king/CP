@@ -1,4 +1,3 @@
-
 // Big Integer Template
 // https://codeforces.com/blog/entry/74200
 struct big_int {
@@ -166,9 +165,9 @@ struct big_int {
     x = s;
     return in;
   }
-  friend ostream& operator<<(ostream& out, big_int& x) {
-    if (x.sign == -1) putchar('-');
-    for (int i = x.size() - 1; i >= 0; i--) putchar(x[i]);
+  friend ostream& operator<<(ostream& out, big_int x) {
+    if (x.sign == -1) out << '-';
+    for (int i = x.size() - 1; i >= 0; i--) out << x[i];
     return out;
   }
 
