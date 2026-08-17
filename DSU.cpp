@@ -10,13 +10,14 @@ struct DSU {
     if (par[u] == u) return u;
     return par[u] = find(par[u]);
   }
-  void unite(int u, int v) {
+  bool unite(int u, int v) {
     int p1 = find(u);
     int p2 = find(v);
     if (p1 == p2) return;
     if (sz[p1] > sz[p2]) swap(p1, p2);
     par[p1] = p2;
     sz[p2] += sz[p1];
+    return true;
   }
   bool same(int u, int v) { return find(u) == find(v); }
   int size(int u) { return sz[find(u)]; }

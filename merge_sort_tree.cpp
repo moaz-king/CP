@@ -32,10 +32,9 @@ struct SegmentTree {
     if (r < lx || l > rx) return 0;
     if (l >= lx && r <= rx) {
       auto &v = tree[node].a;
-      auto &pfx = tree[node].pfx;
-      int it = upper_bound(v.begin(), v.end(), k) - v.begin() - 1;
-      if (it < 0) return 0;
-      return pfx[it];
+      // count greater than or equal to k
+      int it = lower_bound(v.begin(), v.end(), k) - v.begin();
+      return int(v.size()) - it;
     }
     int m = l + r >> 1;
     int l_ans = query(left(node), l, m, lx, rx, k);

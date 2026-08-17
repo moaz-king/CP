@@ -1,21 +1,21 @@
 struct LCA {
   int n, lg;
-  vector<vector<int>> up;
   vector<int> dep;
+  vector<vector<int>> up;
   LCA() { }
-  void dfs(vector<vector<int>> &adj, int node, int u) {
-    for (auto &child : adj[node]) {
-      if (child == u) continue;
-      dep[child] = 1 + dep[node];
-      up[child][0] = node;
+  void dfs(const vector<vector<int>> &adj, int u, int p) {
+    for (auto &v : adj[u]) {
+      if (v == p) continue;
+      dep[v] = 1 + dep[u];
+      up[v][0] = u;
       for (int i = 1; i <= lg; i++) {
-        up[child][i] = up[up[child][i - 1]][i - 1];
+        up[v][i] = up[up[v][i - 1]][i - 1];
       }
-      dfs(adj, child, node);
+      dfs(adj, v, u);
     }
   }
-  LCA(vector<vector<int>> &adj, int rt) {
-    n = (int)adj.size();
+  LCA(const vector<vector<int>> &adj, int rt = 1) {
+    n = int(adj.size());
     lg = __lg(n) + 1;
     dep = vector<int>(n + 1);
     up = vector<vector<int>>(n + 1, vector<int>(lg + 1));

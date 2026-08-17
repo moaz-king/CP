@@ -1,45 +1,43 @@
 int big[N], sz[N];
-void dfsSize(int node, int par) {
-  sz[node] = 1;
-  int mx = 0, x = -1;
-  for (auto &child : adj[node]) {
-    if (child == par) continue;
-    dfsSize(child, node);
-    sz[node] += sz[child];
-    if (sz[child] > mx) {
-      mx = sz[child];
-      x = child;
+void pre(int u, int p) {
+  sz[u] = 1;
+  for (int v : adj[u]) {
+    if (v == p) continue;
+    pre(v, u);
+    sz[u] += sz[v];
+    if (!big[u] || sz[v] > sz[big[u]]) {
+      big[u] = v;
     }
   }
-  big[node] = x;
 }
-void dfs(int node, int par, bool keep) {
-  int b = big[node];
-  for (auto &child : adj[node]) {
-    if (child == par || child == b) continue;
-    dfs(child, node, false);
-  }
-  auto add = [&](int x) {
+void update(int x, int d) {
+  if (d == 1) {
     // add node x
-  };
-  if (~b) {
-    dfs(b, node, true);
-    swap(a[node], a[b]);
+    return;
   }
-  a[node].push_back(node);
-  add(node);
-  for (auto &child : adj[node]) {
-    if (child == par || child == b) continue;
-    for (auto &x : a[child]) {
-      a[node].push_back(x);
-      add(x);
-    }
+  // remove node x
+}
+void add(int u, int p, int d) {
+  update(u, d);
+  for (int v : adj[u]) {
+    if (v == p) continue;
+    add(v, u, d);
   }
-  {
-    // get node's answer
+}
+void dfs(int u, int p, bool keep) {
+  for (int v : adj[u]) {
+    if (v == p || v == big[u]) continue;
+    dfs(v, u, 0);
   }
+  if (big[u]) {
+    dfs(big[u], u, 1);
+  }
+  update(u, 1);
+  for (int v : adj[u]) {
+    if (v == p || v == big[u]) continue;
+    add(v, u, 1);
+  }
+  // get nodes's answer
   if (keep) return;
-  for (auto &x : a[node]) {
-    // remove node x
-  }
+  add(u, p, -1);
 }

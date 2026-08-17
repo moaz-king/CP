@@ -1,7 +1,8 @@
+constexpr int SQ = 450;
 struct Query {
   int l, r, ind;
   Query() { l = r = -1; }
-  Query(int a, int b, int c) : l(a), r(b), ind(c) { }
+  Query(int l, int r, int i) : l(l), r(r), ind(i) { }
   bool operator<(const Query &other) const {
     if (l / SQ != other.l / SQ) {
       return l / SQ < other.l / SQ;
@@ -14,10 +15,10 @@ vector<int> MO(vector<Query> &que) {
   vector<int> ans(q);
   sort(que.begin(), que.end());
   auto add = [&] (int i) {
-
+    // add index i
   };
   auto rem = [&] (int i) {
-
+    // remove index i
   };
   int l = 0, r = -1;
   for (auto [L, R, ind] : que) {
@@ -25,7 +26,7 @@ vector<int> MO(vector<Query> &que) {
     while (l > L) add(--l);
     while (r > R) rem(r--);
     while (l < L) rem(l++);
-    ans[ind] = ;
+    ans[ind] = // get answer
   }
   return ans;
 }

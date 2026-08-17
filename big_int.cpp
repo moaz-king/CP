@@ -1,3 +1,4 @@
+
 // Big Integer Template
 // https://codeforces.com/blog/entry/74200
 struct big_int {

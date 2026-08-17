@@ -148,3 +148,4 @@ std::istream& operator>>(std::istream& stream, Modular<T>& number) {
 
 constexpr int md = $1;
 using Mint = Modular<std::integral_constant<decay<decltype(md)>::type, md>>;
+
