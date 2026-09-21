@@ -17,8 +17,8 @@ struct LCA {
   LCA(const vector<vector<int>> &adj, int rt = 1) {
     n = int(adj.size());
     lg = __lg(n) + 1;
-    dep = vector<int>(n + 1);
-    up = vector<vector<int>>(n + 1, vector<int>(lg + 1));
+    dep.assign(n + 1, 0);
+    up.assign(n + 1, vector<int>(lg + 1));
     dfs(adj, rt, -1);
   }
   int kth_anc(int u, int k) {

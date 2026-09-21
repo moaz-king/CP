@@ -1,9 +1,6 @@
 struct DSU {
-  int n;
   vector<int> par, sz;
-  DSU(int x) : n(x) {
-    par = vector<int>(n + 1);
-    sz = vector<int>(n + 1, 1);
+  DSU(int n) : par(n), sz(n, 1) {
     iota(par.begin(), par.end(), 0);
   }
   int find(int u) {
@@ -13,7 +10,7 @@ struct DSU {
   bool unite(int u, int v) {
     int p1 = find(u);
     int p2 = find(v);
-    if (p1 == p2) return;
+    if (p1 == p2) return false;
     if (sz[p1] > sz[p2]) swap(p1, p2);
     par[p1] = p2;
     sz[p2] += sz[p1];

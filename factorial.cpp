@@ -1,19 +1,20 @@
-Mint fact[N], inv_fact[N];
-void pre_fact(int n) {
-  fact[0] = 1;
-  for (int i = 1; i < n; i++) {
-    fact[i] = fact[i - 1] * i;
+vector<Mint> fact(1, 1);
+vector<Mint> inv_fact(1, 1);
+ 
+Mint nCr(int n, int r) {
+  if (r < 0 || r > n) return 0;
+  while (int(fact.size()) < n + 1) {
+    fact.push_back(fact.back() * int(fact.size()));
+    inv_fact.push_back(1 / fact.back());
   }
-  inv_fact[n - 1] = (Mint)1 / fact[n - 1];
-  for (int i = n - 2; i >= 0; i--) {
-    inv_fact[i] = inv_fact[i + 1] * (i + 1);
+  return fact[n] * inv_fact[r] * inv_fact[n - r];
+}
+
+Mint nPr(int n, int r) {
+  if (r < 0 || r > n) return 0;
+  while (int(fact.size()) < n + 1) {
+    fact.push_back(fact.back() * int(fact.size()));
+    inv_fact.push_back(1 / fact.back());
   }
-}
-Mint nCr(int64_t n, int64_t r) {
-  if (n < 0 || r > n) return 0;
-  return fact[n] * inv_fact[n - r] * inv_fact[r];
-}
-Mint nPr(int64_t n, int64_t r) {
-  if (n < 0 || r > n) return 0;
   return fact[n] * inv_fact[n - r];
 }

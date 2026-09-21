@@ -1,32 +1,28 @@
-struct Node {
-  int mn;
-  Node() { mn = 0; }
-  Node(int x) { mn = x; }
-  void operator=(const Node other) { mn = other.mn; }
-};
 template <typename T, typename U, auto merge>
 struct SparseTable {
-  int n;
-  vector<vector<T>> table;
+  int lg;
+  vector<T> table;
   SparseTable() { }
   SparseTable(const vector<U> &v) { build(v); }
+  inline T& at(int i, int j) { return table[i * lg + j]; }
   void build(const vector<U> &v) {
-    n = v.size();
-    table = vector<vector<T>>(n, vector<T>(__lg(n) + 1));
+    int n = int(v.size());
+    lg = __lg(n) + 1;
+    table.assign(n * lg, T());
     for (int i = 0; i < n; i++) {
-      table[i][0] = T(v[i]);
+      at(i, 0) = T(v[i]);
     }
-    for (int p = 1; p <= __lg(n); p++) {
+    for (int p = 1; p < lg; p++) {
       for (int i = 0; i <= n - (1 << p); i++) {
-        table[i][p] = merge(table[i][p - 1], table[i + (1 << (p - 1))][p - 1]);
+        at(i, p) = merge(at(i, p - 1), at(i + (1 << (p - 1)), p - 1));
       }
     }
   }
   T query(int l, int r) {
     int p = __lg(r - l + 1);
-    return merge(table[l][p], table[r - (1 << p) + 1][p]);
+    return merge(at(l, p), at(r - (1 << p) + 1, p));
   }
 };
-inline Node merge_q(const Node &a, const Node &b) {
-  return Node(min(a.mn, b.mn));
+inline int merge_q(const int &a, const int &b) {
+  return min(a, b);
 }

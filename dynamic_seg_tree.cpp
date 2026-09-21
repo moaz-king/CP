@@ -5,14 +5,14 @@ struct Node {
   void operator=(const Node other) { sum = other.sum; }
 };
 template <typename T, typename U, auto merge>
-struct DynamicSegmentTree {
-  int64_t lo, hi;
+struct SegmentTree {
+  int64_t low, high;
   vector<T> tree;
   vector<int> left, right;
-  DynamicSegmentTree() {}
-  DynamicSegmentTree(int64_t lo_, int64_t hi_) { init(lo_, hi_); }
-  void init(int64_t lo_, int64_t hi_) {
-    lo = lo_, hi = hi_;
+  SegmentTree() {}
+  SegmentTree(int64_t L, int64_t R) { init(L, R); }
+  void init(int64_t L, int64_t R) {
+    low = L, high = R;
     tree.assign(1, T());
     left.assign(1, -1);
     right.assign(1, -1);
@@ -23,8 +23,8 @@ struct DynamicSegmentTree {
     right.push_back(-1);
     return int(tree.size()) - 1;
   }
-  void update(int64_t idx, U val) { update(0, lo, hi, idx, val); }
-  T query(int64_t l, int64_t r) { return query(0, lo, hi, l, r); }
+  void update(int64_t idx, U val) { update(0, low, high, idx, val); }
+  T query(int64_t l, int64_t r) { return query(0, low, high, l, r); }
   void update(int node, int64_t l, int64_t r, int64_t idx, U& val) {
     if (l == r) {
       tree[node] = T(val);
