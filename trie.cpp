@@ -1,36 +1,55 @@
-struct Node {
-  int cnt {};
+struct TrieNode {
+  int ch[26]{}, cnt{}, ed{};
+  int& operator[](int x) { return ch[x]; }
 };
 struct Trie {
-  int n {};
-  vector<array<int, 26>> adj;
-  vector<Node> a;
-  Trie() { adj.emplace_back(), a.emplace_back(); }
+  vector<TrieNode> tr;
+  Trie() { tr.emplace_back(); }
+  int newNode() {
+    tr.emplace_back();
+    return int(tr.size()) - 1;
+  }
   void insert(const string &s) {
     int node = 0;
-    for (int i = 0; i < s.length(); i++) {
-      if (adj[node][s[i] - 'a']) {
-        node = adj[node][s[i] - 'a'];
-        a[node]++;
-      } else {
-        n++;
-        a.emplace_back();
-        adj.emplace_back();
-        adj[node][s[i] - 'a'] = n;
-        node = n;
-        a[node]++;
+    tr[node].cnt++;
+    for (char c : s) {
+      int idx = c - 'a';
+      if (!tr[node][idx]) {
+        tr[node][idx] = newNode();
       }
+      node = tr[node][idx];
+      tr[node].cnt++;
     }
+    tr[node].ed++;
   }
-  int count(const string &s) {
+  bool erase(const string &s) {
+    int end = find(s);
+    if (end == -1 || tr[end].ed == 0) return false;
     int node = 0;
-    for (int i = 0; i < s.length(); i++) {
-      if (adj[node][s[i] - 'a']) {
-        node = adj[node][s[i] - 'a'];
-      } else {
-        return 0;
-      }
+    tr[node].cnt--;
+    for (char c : s) {
+      int idx = c - 'a';
+      node = tr[node][idx];
+      tr[node].cnt--;
     }
-    return a[node].cnt;
+    tr[node].ed--;
+    return true;
+  }
+  int count_word(const string &s) {
+    int node = find(s);
+    return node == -1 ? 0 : tr[node].ed;
+  }
+  int count_pfx(const string &s) {
+    int node = find(s);
+    return node == -1 ? 0 : tr[node].cnt;
+  }
+  int find(const string &s) {
+    int node = 0;
+    for (char c : s) {
+      int idx = c - 'a';
+      if (!tr[node][idx]) return -1;
+      node = tr[node][idx];
+    }
+    return node;
   }
 };

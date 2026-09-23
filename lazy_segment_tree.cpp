@@ -1,15 +1,15 @@
 struct TreeNode {
-  int64_t sum;
-  TreeNode() { sum = 0; }
+  int64_t sum{};
+  TreeNode() { }
   TreeNode(int64_t x) { sum = x; }
-  void operator=(const TreeNode other) { sum = other.sum; }
+  void operator=(const TreeNode &other) { sum = other.sum; }
 };
 struct LazyNode {
-  int64_t sum;
-  LazyNode() { sum = 0; }
+  int64_t sum{};
+  LazyNode() { }
   LazyNode(int64_t x) { sum = x; }
-  void operator=(const LazyNode other) { sum = other.sum; }
-  bool operator==(const LazyNode other) const { return sum == other.sum; }
+  void operator=(const LazyNode &other) { sum = other.sum; }
+  bool operator==(const LazyNode &other) const { return sum == other.sum; }
 };
 template <typename T, typename U, typename V, auto merge_q, auto merge_u, auto apply>
 struct SegmentTree {
@@ -23,7 +23,7 @@ struct SegmentTree {
   SegmentTree() { }
   SegmentTree(const vector<U> &v) { build(v); }
   void build(const vector<U> &v) {
-    n = v.size();
+    n = int(v.size());
     tree.resize(4 * n, T());
     lazy.resize(4 * n, V());
     build(1, 0, n - 1, v);

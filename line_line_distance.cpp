@@ -21,8 +21,8 @@ T pointSegmentDistance(point a, point b, point p) {
 }
 
 int orientation(point a, point b, point c) {
-  int64_t val = (b.X - a.X) * (c.Y - a.Y) - (b.Y - a.Y) * (c.X - a.X);
-  if (val == 0) return 0;
+  T val = (b.X - a.X) * (c.Y - a.Y) - (b.Y - a.Y) * (c.X - a.X);
+  if (fabsl(val) < EPS) return 0;
   return (val > 0 ? 1 : -1);
 }
 

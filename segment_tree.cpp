@@ -1,8 +1,8 @@
 struct Node {
-  int64_t sum;
-  Node() { sum = 0; }
+  int64_t sum{};
+  Node() { }
   Node(int64_t x) { sum = x; }
-  void operator=(const Node other) { sum = other.sum; }
+  void operator=(const Node &other) { sum = other.sum; }
 };
 template <typename T, typename U, auto merge>
 struct SegmentTree {
@@ -15,7 +15,7 @@ struct SegmentTree {
   SegmentTree() { }
   SegmentTree(const vector<U> &v) { build(v); }
   void build(const vector<U> &v) {
-    n = v.size();
+    n = int(v.size());
     tree.resize(n << 2, T());
     build(1, 0, n - 1, v);
   }

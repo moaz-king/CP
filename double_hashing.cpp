@@ -5,7 +5,7 @@ const int64_t MOD2 = 1e9 + 9;
 const int64_t base1 = rnd(0.25 * MOD1, 0.75 * MOD1);
 const int64_t base2 = rnd(0.25 * MOD1, 0.75 * MOD1);
 struct HashedString {
-  int64_t n {};
+  int64_t n{};
   vector<int64_t> hash1, hash2, pw1, pw2;
   HashedString() {
     hash1.emplace_back();

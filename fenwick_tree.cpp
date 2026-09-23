@@ -21,6 +21,7 @@ struct BIT {
   int query(int l, int r) {
     return query(r) - query(l - 1);
   }
+  // BIT must be monotonic.
   int lower_bound(int x) {
     int pos = 0, sum = 0;
     for (int i = __lg(n); ~i; --i) {
