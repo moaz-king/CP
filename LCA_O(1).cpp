@@ -34,7 +34,6 @@ struct LCA {
     }
   }
   int lca(int u, int v) {
-    if (min(u, v) <= 0) return max(u, v);
     assert(u >= 1 && u <= n && v >= 1 && v <= n);
     int l = in[u], r = in[v];
     if (l > r) swap(l, r);
