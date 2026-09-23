@@ -1,4 +1,3 @@
-
 // Modular Arithmetic Template (tourist)
 // https://codeforces.com/contest/1261/submission/65632855
 template <typename T>
