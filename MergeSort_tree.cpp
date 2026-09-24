@@ -2,22 +2,28 @@ struct Node {
   vector<int> a;
   Node() { }
   Node(int x) { a.push_back(x); }
-  void operator=(const Node other) { a = other.a; }
+  void operator=(const Node &other) { a = other.a; }
 };
+
 template <typename T, typename U, auto merge>
 struct SegmentTree {
   int n;
   vector<T> tree;
+
   inline int left(int node) { return node << 1; }
   inline int right(int node) { return node << 1 | 1; }
+
   int query(int l, int r, int k) { return query(1, 0, n - 1, l, r, k); }
+
   SegmentTree() { }
   SegmentTree(const vector<U> &v) { build(v); }
+
   void build(const vector<U> &v) {
     n = int(v.size());
     tree.resize(n << 2, T());
     build(1, 0, n - 1, v);
   }
+
   void build(int node, int l, int r, const vector<U> &v) {
     if (l == r) {
       tree[node] = T(v[l]);
@@ -28,6 +34,7 @@ struct SegmentTree {
     build(right(node), m + 1, r, v);
     tree[node] = merge(tree[left(node)], tree[right(node)]);
   }
+
   int query(int node, int l, int r, int lx, int rx, int k) {
     if (r < lx || l > rx) return 0;
     if (l >= lx && r <= rx) {
@@ -42,6 +49,7 @@ struct SegmentTree {
     return l_ans + r_ans;
   }
 };
+
 inline Node merge_q(const Node &a, const Node &b) {
   Node res;
   int p1 = 0, p2 = 0;

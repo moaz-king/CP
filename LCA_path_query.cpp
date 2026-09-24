@@ -3,13 +3,16 @@ struct Edge {
   Edge() { mn = 2e9, mx = -2e9; }
   Edge(int x) { mn = mx = x; }
 };
+
 template<typename T, auto merge>
 struct LCA {
   int n, lg;
   vector<int> dep;
   vector<vector<int>> up;
   vector<vector<T>> tbl;
+
   LCA() { }
+
   void dfs(const vector<vector<pair<int, int>>> &adj, int u, int p = -1) {
     for (auto &[v, w] : adj[u]) {
       if (v == p) continue;
@@ -23,6 +26,7 @@ struct LCA {
       dfs(adj, v, u);
     }
   }
+
   LCA(const vector<vector<pair<int, int>>> &adj, int rt = 1) {
     n = adj.size();
     lg = __lg(n) + 1;
@@ -31,6 +35,7 @@ struct LCA {
     tbl = vector<vector<T>>(n + 1, vector<T>(lg + 1));
     dfs(adj, rt);
   }
+
   int kth_anc(int u, int k) {
     if (k > dep[u]) return -1;
     for (int i = lg; i >= 0; i--) {
@@ -40,6 +45,7 @@ struct LCA {
     }
     return u;
   }
+
   int lca(int u, int v) {
     if (dep[u] < dep[v]) swap(u, v);
     int k = dep[u] - dep[v];
@@ -53,6 +59,7 @@ struct LCA {
     }
     return up[u][0];
   }
+
   T query(int u, int k) {
     // query on k nodes above u
     T cur;
@@ -65,6 +72,7 @@ struct LCA {
     return cur;
   }
 };
+
 inline Edge merge_q(const Edge &a, const Edge &b) {
   // a is the closest half, b is the farthest
   Edge res;

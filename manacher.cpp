@@ -22,6 +22,7 @@ vector<int> manacher_odd(T a) {
   }
   return vector<int>(p.begin() + 1, p.end() - 1);
 }
+
 template <typename T>
 vector<int> manacher(const T &a) {
   int n = int(a.size());

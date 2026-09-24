@@ -2,6 +2,7 @@ struct FastScanner {
   static constexpr int BUFSIZE = 1 << 16;
   int idx = 0, size = 0;
   char buf[BUFSIZE];
+
   inline char readChar() {
     if (idx >= size) {
       size = (int)fread(buf, 1, BUFSIZE, stdin);
@@ -10,6 +11,7 @@ struct FastScanner {
     }
     return buf[idx++];
   }
+
   template <class T>
   bool nextInt(T& out) {
     char c = readChar();
@@ -31,6 +33,7 @@ struct FastScanner {
     out = neg ? (T)-val : (T)val;
     return true;
   }
+  
   bool nextString(string& out) {
     out.clear();
     char c = readChar();

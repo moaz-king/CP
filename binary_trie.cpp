@@ -2,15 +2,20 @@ struct TrieNode {
   int ch[2]{}, frq = 0, idx = INT_MIN;
   int& operator[](int x) { return ch[x]; }
 };
+
 struct BinaryTrie {
   vector<TrieNode> tr;
   const int M = 30;
+
   BinaryTrie() { newNode(); }
+
   int newNode() {
     tr.emplace_back();
     return sz(tr) - 1;
   }
+
   int size(int u) { return tr[u].frq; } // elements pass through node u
+
   int count(int x) {
     int u = 0;
     for (int i = M - 1; i >= 0; i--) {
@@ -20,6 +25,7 @@ struct BinaryTrie {
     }
     return size(u);
   }
+
   void update(int x, int d, int id = 1) { // d = 1 to insert | d = -1 to delete
     if (d == -1 && !count(x)) return;
     int u = 0;
@@ -32,6 +38,7 @@ struct BinaryTrie {
       tr[u].frq += d;
     }
   }
+
   int less(int x, int k) {  // cnt of y ^ x < k
     int u = 0;
     int cnt = 0;
@@ -49,6 +56,7 @@ struct BinaryTrie {
     }
     return cnt;
   }
+
   pair<int64_t, int> greater(int x, int k) {  // {cnt of y ^ x >= k, last index}
     int u = 0;
     int64_t cnt = 0;
@@ -74,6 +82,7 @@ struct BinaryTrie {
     }
     return {cnt, idx};
   }
+
   int minXOR(int x) {
     int u = 0;
     int res = 0;
@@ -88,6 +97,7 @@ struct BinaryTrie {
     }
     return res;
   }
+  
   int maxXOR(int x) {
     int u = 0;
     int res = 0;

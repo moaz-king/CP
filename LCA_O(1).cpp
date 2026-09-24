@@ -2,13 +2,15 @@ struct LCA {
   int n;
   vector<int> in, flat, node;
   vector<vector<int>> table;
+
   LCA() { }
-  LCA(vector<vector<int>> &adj, int root) {
+  LCA(vector<vector<int>> &adj, int rt = 1) {
     n = int(adj.size()) - 1;
     in.assign(n + 1, 0);
-    dfs(root, -1, adj);
+    dfs(rt, -1, adj);
     build();
   }
+
   void dfs(int u, int p, vector<vector<int>> &adj) {
     int idx = int(node.size());
     node.push_back(u);
@@ -20,6 +22,7 @@ struct LCA {
       flat.push_back(idx);
     }
   }
+  
   void build() {
     int sz = int(flat.size());
     int m = __lg(sz) + 1;
@@ -33,6 +36,7 @@ struct LCA {
       }
     }
   }
+  
   int lca(int u, int v) {
     assert(u >= 1 && u <= n && v >= 1 && v <= n);
     int l = in[u], r = in[v];

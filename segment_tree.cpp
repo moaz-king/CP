@@ -4,21 +4,27 @@ struct Node {
   Node(int64_t x) { sum = x; }
   void operator=(const Node &other) { sum = other.sum; }
 };
+
 template <typename T, typename U, auto merge>
 struct SegmentTree {
   int n;
   vector<T> tree;
+
   inline int left(int node) { return node << 1; }
   inline int right(int node) { return node << 1 | 1; }
+  
   void update(int idx, U val) { update(1, 0, n - 1, idx, val); }
   T query(int l, int r) { return query(1, 0, n - 1, l, r); }
+
   SegmentTree() { }
   SegmentTree(const vector<U> &v) { build(v); }
+
   void build(const vector<U> &v) {
     n = int(v.size());
     tree.resize(n << 2, T());
     build(1, 0, n - 1, v);
   }
+
   void build(int node, int l, int r, const vector<U> &v) {
     if (l == r) {
       tree[node] = T(v[l]);
@@ -29,6 +35,7 @@ struct SegmentTree {
     build(right(node), m + 1, r, v);
     tree[node] = merge(tree[left(node)], tree[right(node)]);
   }
+
   void update(int node, int l, int r, int idx, U &val) {
     if (l == r) {
       tree[node] = T(val);
@@ -42,6 +49,7 @@ struct SegmentTree {
     }
     tree[node] = merge(tree[left(node)], tree[right(node)]);
   }
+  
   T query(int node, int l, int r, int lx, int rx) {
     if (l >= lx && r <= rx) return tree[node];
     int m = l + r >> 1;
@@ -50,6 +58,7 @@ struct SegmentTree {
     return merge(l_ans, r_ans);
   }
 };
+
 inline Node merge_q(const Node &a, const Node &b) {
   // merge queries
 }

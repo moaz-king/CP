@@ -2,9 +2,12 @@ template <typename T, typename U, auto merge>
 struct SparseTable_2D {
   int n, m, lg_n, lg_m;
   vector<T> table;
+
   SparseTable_2D() { }
   SparseTable_2D(const vector<vector<U>> &v) { build(v); }
+
   inline T& at(int i, int j, int k, int l) { return table[((i * m + j) * lg_n + k) * lg_m + l]; }
+
   void build(const vector<vector<U>> &v) {
     n = int(v.size());
     m = int(v[0].size());
@@ -43,6 +46,7 @@ struct SparseTable_2D {
       }
     }
   }
+
   T query(int x1, int y1, int x2, int y2) {
     int pn = __lg(x2 - x1 + 1);
     int pm = __lg(y2 - y1 + 1);
@@ -52,6 +56,7 @@ struct SparseTable_2D {
     );
   }
 };
-int merge_q(const int &a, const int &b) {
+
+inline int merge_q(const int &a, const int &b) {
   return min(a, b);
 }

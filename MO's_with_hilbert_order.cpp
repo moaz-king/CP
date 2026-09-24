@@ -1,4 +1,5 @@
-int lg = 21;
+constexpr int lg = 21;
+
 inline int64_t hilbertOrder(int x, int y, int pow, int rotate) {
   if (pow == 0) return 0;
   int hpow = 1 << (pow - 1);
@@ -13,24 +14,30 @@ inline int64_t hilbertOrder(int x, int y, int pow, int rotate) {
   ans += (seg == 1 || seg == 2) ? add : (subSquareSize - add - 1);
   return ans;
 }
+
 struct Query {
   int l, r, ind;
   int64_t ord;
+
   Query() { }
-  inline void calcOrder() { ord = hilbertOrder(l, r, lg, 0); }
   Query(int l, int r, int i) : l(l), r(r), ind(i) { calcOrder(); }
+
+  inline void calcOrder() { ord = hilbertOrder(l, r, lg, 0); }
   bool operator<(const Query& other) const { return ord < other.ord; }
 };
+
 vector<int> MO(vector<Query>& que) {
   int q = que.size();
   vector<int> ans(q);
   sort(que.begin(), que.end());
+
   auto add = [&](int i) {
     // add index i
   };
   auto rem = [&](int i) {
     // remove index i
   };
+  
   int l = 0, r = -1;
   for (auto [L, R, ind, ord] : que) {
     while (r < R) add(++r);

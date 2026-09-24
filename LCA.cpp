@@ -2,7 +2,9 @@ struct LCA {
   int n, lg;
   vector<int> dep;
   vector<vector<int>> up;
+
   LCA() { }
+
   void dfs(const vector<vector<int>> &adj, int u, int p) {
     for (auto &v : adj[u]) {
       if (v == p) continue;
@@ -14,6 +16,7 @@ struct LCA {
       dfs(adj, v, u);
     }
   }
+
   LCA(const vector<vector<int>> &adj, int rt = 1) {
     n = int(adj.size());
     lg = __lg(n) + 1;
@@ -21,6 +24,7 @@ struct LCA {
     up.assign(n + 1, vector<int>(lg + 1));
     dfs(adj, rt, -1);
   }
+
   int kth_anc(int u, int k) {
     if (k > dep[u]) return -1;
     for (int i = lg; i >= 0; i--) {
@@ -30,6 +34,7 @@ struct LCA {
     }
     return u;
   }
+  
   int lca(int u, int v) {
     if (dep[u] < dep[v]) swap(u, v);
     int k = dep[u] - dep[v];

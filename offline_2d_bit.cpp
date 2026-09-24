@@ -1,11 +1,13 @@
-template <class T>
+template <typename T>
 struct Offline_2D_BIT {
   int sz{};
   bool ready{};
   vector<pair<int, int>> todo;
   vector<int> cnt, start, val;
   vector<T> bit;
+
   Offline_2D_BIT(int sz) : sz(sz), cnt(sz), start(sz) { }
+
   void init() {
     assert(!ready);
     ready = true;
@@ -38,14 +40,17 @@ struct Offline_2D_BIT {
       }
     }
   }
+
   int rank(int y, int l, int r) {
     return upper_bound(val.begin() + l, val.begin() + r, y) - val.begin() - l;
   }
+  
   void updateNode(int x, int y, T d) {
     for (y = rank(y, start[x], start[x] + cnt[x]); y <= cnt[x]; y += y & -y) {
       bit[start[x] + y - 1] += d;
     }
   }
+
   void update(int x, int y, T d) {
     if (!ready) {
       todo.push_back({x, y});
@@ -55,6 +60,7 @@ struct Offline_2D_BIT {
       }
     }
   }
+
   T queryNode(int x, int y) {
     T res = 0;
     for (y = rank(y, start[x], start[x] + cnt[x]); y > 0; y -= y & -y) {
@@ -62,6 +68,7 @@ struct Offline_2D_BIT {
     }
     return res;
   }
+
   T query(int x, int y) {
     assert(ready);
     T res = 0;
@@ -70,6 +77,7 @@ struct Offline_2D_BIT {
     }
     return res;
   }
+  
   T query(int x1, int y1, int x2, int y2) {
     return query(x2, y2) - query(x1 - 1, y2) - query(x2, y1 - 1) + query(x1 - 1, y1 - 1);
   }

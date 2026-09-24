@@ -8,6 +8,7 @@ int64_t nCr(int64_t n, int64_t r) {
   }
   return res;
 }
+
 int64_t nPr(int64_t n, int64_t r) {
   if (r > n || r < 0) return 0;
   int64_t res = 1;
