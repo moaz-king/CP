@@ -13,7 +13,6 @@ for file in templates_dir.glob("*.cpp"):
   snippets[name] = {
     "prefix": name,
     "body": body,
-    "description": name
   }
 
 output_file.write_text(
