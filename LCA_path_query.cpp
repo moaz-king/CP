@@ -28,7 +28,7 @@ struct LCA {
   }
 
   LCA(const vector<vector<pair<int, int>>> &adj, int rt = 1) {
-    n = adj.size();
+    n = int(adj.size());
     lg = __lg(n) + 1;
     dep = vector<int>(n + 1);
     up = vector<vector<int>>(n + 1, vector<int>(lg + 1));
@@ -61,7 +61,7 @@ struct LCA {
   }
 
   T query(int u, int k) {
-    // query on k nodes above u
+    // query on k edges above u
     T cur;
     for (int i = 0; i <= lg; ++i) {
       if (k >> i & 1) {
