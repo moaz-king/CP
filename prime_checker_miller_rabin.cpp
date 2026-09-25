@@ -22,7 +22,7 @@ bool millerRabin(u64 n, u64 a) {
   }
   u64 x = power(a, d, n);
   if (x == 1 || x == n - 1) return true;
-  for (int i = 1; i < r; i++) {
+  for (int i = 1; i < r; ++i) {
     x = (u128)x * x % n;
     if (x == n - 1) return true;
   }

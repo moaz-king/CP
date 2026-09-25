@@ -19,7 +19,7 @@ struct HashedString {
   }
 
   void build(const string &s) {
-    for (int i = 0; i < int(s.length()); i++) {
+    for (int i = 0; i < int(s.length()); ++i) {
       push_back(s[i]);
     }
   }

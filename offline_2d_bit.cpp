@@ -23,7 +23,7 @@ struct Offline_2D_BIT {
       }
     }
     int total = 0;
-    for (int i = 0; i < sz; i++) {
+    for (int i = 0; i < sz; ++i) {
       last[i] = 0;
       total += cnt[i];
       start[i] = total;

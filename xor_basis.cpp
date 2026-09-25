@@ -55,7 +55,7 @@ struct XorBasis {
   int64_t count(int l) {
     int r = 0;
     for (int i = 0; i < B; ++i) {
-      if (b[i].pos >= l) r++;
+      if (b[i].pos >= l) ++r;
     }
     return 1LL << r;
   }
@@ -64,7 +64,7 @@ struct XorBasis {
   int rank(int l) {
     int r = 0;
     for (int i = 0; i < B; ++i) {
-      if (b[i].pos >= l) r++;
+      if (b[i].pos >= l) ++r;
     }
     return r;
   }

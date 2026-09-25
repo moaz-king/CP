@@ -19,7 +19,7 @@ struct LCA {
       dep[v] = dep[u] + 1;
       up[v][0] = u;
       tbl[v][0] = Edge(w);
-      for (int i = 1; i < lg; i++) {
+      for (int i = 1; i < lg; ++i) {
         up[v][i] = up[up[v][i - 1]][i - 1];
         tbl[v][i] = merge(tbl[v][i - 1], tbl[up[v][i - 1]][i - 1]);
       }
@@ -38,7 +38,7 @@ struct LCA {
 
   int kth_anc(int u, int k) {
     if (k > dep[u]) return -1;
-    for (int i = lg; i >= 0; i--) {
+    for (int i = lg; i >= 0; --i) {
       if (k >> i & 1) {
         u = up[u][i];
       }
@@ -51,7 +51,7 @@ struct LCA {
     int k = dep[u] - dep[v];
     u = kth_anc(u, k);
     if (u == v) return u;
-    for (int i = lg; i >= 0; i--) {
+    for (int i = lg; i >= 0; --i) {
       if (up[u][i] != up[v][i]) {
         u = up[u][i];
         v = up[v][i];

@@ -18,7 +18,7 @@ struct BinaryTrie {
 
   int count(int x) {
     int u = 0;
-    for (int i = M - 1; i >= 0; i--) {
+    for (int i = M - 1; i >= 0; --i) {
       int bt = (x >> i) & 1;
       if (!size(tr[u][bt])) return 0;
       u = tr[u][bt];
@@ -30,7 +30,7 @@ struct BinaryTrie {
     if (d == -1 && !count(x)) return;
     int u = 0;
     tr[u].idx = max(tr[u].idx, id);
-    for (int i = M - 1; i >= 0; i--) {
+    for (int i = M - 1; i >= 0; --i) {
       int bt = x >> i & 1;
       if (!tr[u][bt]) tr[u][bt] = newNode();
       u = tr[u][bt];
@@ -42,7 +42,7 @@ struct BinaryTrie {
   int less(int x, int k) {  // cnt of y ^ x < k
     int u = 0;
     int cnt = 0;
-    for (int i = M - 1; i >= 0; i--) {
+    for (int i = M - 1; i >= 0; --i) {
       int btk = (k >> i) & 1;
       int btx = (x >> i) & 1;
       if (btk == 1) {
@@ -61,7 +61,7 @@ struct BinaryTrie {
     int u = 0;
     int64_t cnt = 0;
     int idx = INT_MIN;
-    for (int i = M - 1; i >= 0; i--) {
+    for (int i = M - 1; i >= 0; --i) {
       int btk = (k >> i) & 1;
       int btx = (x >> i) & 1;
       if (btk == 1) {
@@ -86,7 +86,7 @@ struct BinaryTrie {
   int minXOR(int x) {
     int u = 0;
     int res = 0;
-    for (int i = M - 1; i >= 0; i--) {
+    for (int i = M - 1; i >= 0; --i) {
       int bt = x >> i & 1;
       if (size(tr[u][bt])) {
         u = tr[u][bt];
@@ -101,7 +101,7 @@ struct BinaryTrie {
   int maxXOR(int x) {
     int u = 0;
     int res = 0;
-    for (int i = M - 1; i >= 0; i--) {
+    for (int i = M - 1; i >= 0; --i) {
       int bt = (x >> i) & 1;
       if (size(tr[u][!bt])) {
         u = tr[u][!bt];
