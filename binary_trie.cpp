@@ -1,6 +1,6 @@
 struct TrieNode {
   int ch[2]{};
-  int64_t fr = 0;
+  int64_t fr{};
   int& operator[](int x) { return ch[x]; }
 };
 
