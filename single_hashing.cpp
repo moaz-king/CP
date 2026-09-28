@@ -12,11 +12,7 @@ struct HashedString {
     pw.push_back(1);
   }
 
-  HashedString(const string &s) {
-    hsh.emplace_back();
-    pw.push_back(1);
-    build(s);
-  }
+  HashedString(const string &s) : HashedString() { build(s); }
 
   void build(const string &s) {
     for (int i = 0; i < int(s.length()); ++i) {

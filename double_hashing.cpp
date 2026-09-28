@@ -17,13 +17,7 @@ struct HashedString {
     pw2.push_back(1);
   }
   
-  HashedString(const string &s) {
-    hash1.emplace_back();
-    hash2.emplace_back();
-    pw1.push_back(1);
-    pw2.push_back(1);
-    build(s);
-  }
+  HashedString(const string &s) : HashedString() { build(s); }
   
   void build(const string &s) {
     for (int i = 0; i < int(s.length()); ++i) {
@@ -39,7 +33,7 @@ struct HashedString {
     ++n;
   }
   
-  pair<int64_t, int64_t> get(int l, int r) {
+  auto get(int l, int r) {
     auto h1 = (hash1[r + 1] - (hash1[l] * pw1[r - l + 1] % MOD1) + MOD1) % MOD1;
     auto h2 = (hash2[r + 1] - (hash2[l] * pw2[r - l + 1] % MOD2) + MOD2) % MOD2;
     return make_pair(h1, h2);
