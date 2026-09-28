@@ -1,50 +1,62 @@
 struct TrieNode {
-  int ch[2]{}, frq = 0, idx = INT_MIN;
+  int ch[2]{};
+  int64_t fr = 0;
   int& operator[](int x) { return ch[x]; }
 };
 
 struct BinaryTrie {
   vector<TrieNode> tr;
-  const int M = 30;
+  int64_t total = 0;
+  int M;
 
-  BinaryTrie() { newNode(); }
+  BinaryTrie(int M = 30, int n = 1) : M(M) {
+    tr.reserve(1ll * n * M + 1);
+    newNode();
+  }
 
   int newNode() {
     tr.emplace_back();
-    return sz(tr) - 1;
+    return int(tr.size()) - 1;
   }
 
-  int size(int u) { return tr[u].frq; } // elements pass through node u
+  int64_t size(int u) { return tr[u].fr; }
 
-  int count(int x) {
+  int64_t count(int64_t x) {
     int u = 0;
     for (int i = M - 1; i >= 0; --i) {
-      int bt = (x >> i) & 1;
+      int bt = x >> i & 1;
       if (!size(tr[u][bt])) return 0;
       u = tr[u][bt];
     }
     return size(u);
   }
 
-  void update(int x, int d, int id = 1) { // d = 1 to insert | d = -1 to delete
-    if (d == -1 && !count(x)) return;
+  void update(int64_t x, int64_t d) {
+    assert(x >> M == 0);
+    if (d < 0 && count(x) < -d) return;
+    total += d;
     int u = 0;
-    tr[u].idx = max(tr[u].idx, id);
     for (int i = M - 1; i >= 0; --i) {
       int bt = x >> i & 1;
-      if (!tr[u][bt]) tr[u][bt] = newNode();
+      if (!tr[u][bt]) {
+        int v = newNode();
+        tr[u][bt] = v;
+      }
       u = tr[u][bt];
-      tr[u].idx = max(tr[u].idx, id);
-      tr[u].frq += d;
+      tr[u].fr += d;
     }
   }
 
-  int less(int x, int k) {  // cnt of y ^ x < k
+  void insert(int64_t x) { update(x, 1); }
+  void erase(int64_t x) { update(x, -1); }
+
+  int64_t less(int64_t x, int64_t k) {  // cnt of y ^ x < k
+    if (k >> M) return total;
     int u = 0;
-    int cnt = 0;
+    int64_t cnt = 0;
     for (int i = M - 1; i >= 0; --i) {
-      int btk = (k >> i) & 1;
-      int btx = (x >> i) & 1;
+      int btk = k >> i & 1;
+      int btx = x >> i & 1;
       if (btk == 1) {
         int same = tr[u][btx];
         if (same) cnt += size(same);
@@ -57,55 +69,35 @@ struct BinaryTrie {
     return cnt;
   }
 
-  pair<int64_t, int> greater(int x, int k) {  // {cnt of y ^ x >= k, last index}
-    int u = 0;
-    int64_t cnt = 0;
-    int idx = INT_MIN;
-    for (int i = M - 1; i >= 0; --i) {
-      int btk = (k >> i) & 1;
-      int btx = (x >> i) & 1;
-      if (btk == 1) {
-        u = tr[u][!btx];
-      } else {
-        int dif = tr[u][!btx];
-        if (dif) {
-          cnt += size(dif);
-          idx = max(idx, tr[dif].idx);
-        }
-        u = tr[u][btx];
-      }
-      if (u == 0) break;
-    }
-    if (u != 0) {
-      cnt += size(u);
-      idx = max(idx, tr[u].idx);
-    }
-    return {cnt, idx};
+  int64_t greater_or_equal(int64_t x, int64_t k) {  // cnt of y ^ x >= k
+    return total - less(x, k);
   }
 
-  int minXOR(int x) {
+  int64_t min_xor(int64_t x) {
+    assert(total);
     int u = 0;
-    int res = 0;
+    int64_t res = 0;
     for (int i = M - 1; i >= 0; --i) {
       int bt = x >> i & 1;
       if (size(tr[u][bt])) {
         u = tr[u][bt];
       } else {
-        res |= (1 << i);
+        res |= 1ll << i;
         u = tr[u][!bt];
       }
     }
     return res;
   }
-  
-  int maxXOR(int x) {
+
+  int64_t max_xor(int64_t x) {
+    assert(total);
     int u = 0;
-    int res = 0;
+    int64_t res = 0;
     for (int i = M - 1; i >= 0; --i) {
-      int bt = (x >> i) & 1;
+      int bt = x >> i & 1;
       if (size(tr[u][!bt])) {
         u = tr[u][!bt];
-        res |= (1 << i);
+        res |= 1ll << i;
       } else {
         u = tr[u][bt];
       }
