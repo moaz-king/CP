@@ -1,10 +1,16 @@
-void operator<<=(string &s, int n) {
-  if (int(s.length()) == 0) return;
-  string f = s + s;
-  s = f.substr(n % int(s.length()), int(s.length()));
+template <typename T>
+void operator<<=(T &a, int n) {
+  int sz = int(a.size());
+  if (sz == 0) return;
+  T f(a);
+  f.insert(f.begin(), a.begin(), a.end());
+  int ind = n % sz;
+  a = T(f.begin() + ind, f.begin() + ind + sz);
 }
 
-void operator>>=(string &s, int n) {
-  if (int(s.length()) == 0) return;
-  s <<= int(s.length()) - (n % int(s.length()));
+template <typename T>
+void operator>>=(T &a, int n) {
+  int sz = int(a.size());
+  if (sz == 0) return;
+  a <<= sz - (n % sz);
 }
