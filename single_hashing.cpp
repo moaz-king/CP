@@ -4,7 +4,6 @@ int64_t rnd(int64_t l, int64_t r) { return uniform_int_distribution<int64_t>(l, 
 const uint64_t base = rnd(1e6, 1e9);
 
 struct HashedString {
-  int64_t n {};
   vector<uint64_t> hsh, pw;
 
   HashedString() {
@@ -23,7 +22,6 @@ struct HashedString {
   void push_back(char c) {
     hsh.push_back(hsh.back() * base + c);
     pw.push_back(pw.back() * base);
-    ++n;
   }
   
   uint64_t get(int l, int r) {
