@@ -23,7 +23,7 @@ struct BinaryTrie {
 
   int64_t count(int64_t x) {
     int u = 0;
-    for (int i = M - 1; i >= 0; --i) {
+    for (int i = M - 1; ~i; --i) {
       int bt = x >> i & 1;
       if (!size(tr[u][bt])) return 0;
       u = tr[u][bt];
@@ -36,7 +36,7 @@ struct BinaryTrie {
     if (d < 0 && count(x) < -d) return;
     total += d;
     int u = 0;
-    for (int i = M - 1; i >= 0; --i) {
+    for (int i = M - 1; ~i; --i) {
       int bt = x >> i & 1;
       if (!tr[u][bt]) {
         int v = newNode();
@@ -54,7 +54,7 @@ struct BinaryTrie {
     if (k >> M) return total;
     int u = 0;
     int64_t cnt = 0;
-    for (int i = M - 1; i >= 0; --i) {
+    for (int i = M - 1; ~i; --i) {
       int btk = k >> i & 1;
       int btx = x >> i & 1;
       if (btk == 1) {
@@ -77,7 +77,7 @@ struct BinaryTrie {
     assert(total);
     int u = 0;
     int64_t res = 0;
-    for (int i = M - 1; i >= 0; --i) {
+    for (int i = M - 1; ~i; --i) {
       int bt = x >> i & 1;
       if (size(tr[u][bt])) {
         u = tr[u][bt];
@@ -93,7 +93,7 @@ struct BinaryTrie {
     assert(total);
     int u = 0;
     int64_t res = 0;
-    for (int i = M - 1; i >= 0; --i) {
+    for (int i = M - 1; ~i; --i) {
       int bt = x >> i & 1;
       if (size(tr[u][!bt])) {
         u = tr[u][!bt];
