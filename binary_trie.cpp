@@ -11,10 +11,10 @@ struct BinaryTrie {
 
   BinaryTrie(int M = 30, int n = 1) : M(M) {
     tr.reserve(1ll * n * M + 1);
-    newNode();
+    new_node();
   }
 
-  int newNode() {
+  int new_node() {
     tr.emplace_back();
     return int(tr.size()) - 1;
   }
@@ -39,7 +39,7 @@ struct BinaryTrie {
     for (int i = M - 1; ~i; --i) {
       int bt = x >> i & 1;
       if (!tr[u][bt]) {
-        int v = newNode();
+        int v = new_node();
         tr[u][bt] = v;
       }
       u = tr[u][bt];

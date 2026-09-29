@@ -6,58 +6,59 @@ struct TrieNode {
 struct Trie {
   vector<TrieNode> tr;
 
-  Trie() { tr.emplace_back(); }
+  Trie() { new_node(); }
 
-  int newNode() {
+  int new_node() {
     tr.emplace_back();
     return int(tr.size()) - 1;
   }
 
   void insert(const string &s) {
-    int node = 0;
-    tr[node].cnt++;
+    int u = 0;
+    tr[u].cnt++;
     for (char c : s) {
       int idx = c - 'a';
-      if (!tr[node][idx]) {
-        tr[node][idx] = newNode();
+      if (!tr[u][idx]) {
+        int v = new_node();
+        tr[u][idx] = v;
       }
-      node = tr[node][idx];
-      tr[node].cnt++;
+      u = tr[u][idx];
+      tr[u].cnt++;
     }
-    tr[node].ed++;
+    tr[u].ed++;
   }
 
   bool erase(const string &s) {
     int end = find(s);
     if (end == -1 || tr[end].ed == 0) return false;
-    int node = 0;
-    tr[node].cnt--;
+    int u = 0;
+    tr[u].cnt--;
     for (char c : s) {
       int idx = c - 'a';
-      node = tr[node][idx];
-      tr[node].cnt--;
+      u = tr[u][idx];
+      tr[u].cnt--;
     }
-    tr[node].ed--;
+    tr[u].ed--;
     return true;
   }
 
   int count_word(const string &s) {
-    int node = find(s);
-    return node == -1 ? 0 : tr[node].ed;
+    int u = find(s);
+    return u == -1 ? 0 : tr[u].ed;
   }
 
   int count_pfx(const string &s) {
-    int node = find(s);
-    return node == -1 ? 0 : tr[node].cnt;
+    int u = find(s);
+    return u == -1 ? 0 : tr[u].cnt;
   }
 
   int find(const string &s) {
-    int node = 0;
+    int u = 0;
     for (char c : s) {
       int idx = c - 'a';
-      if (!tr[node][idx]) return -1;
-      node = tr[node][idx];
+      if (!tr[u][idx]) return -1;
+      u = tr[u][idx];
     }
-    return node;
+    return u;
   }
 };
