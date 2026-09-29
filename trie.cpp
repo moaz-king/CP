@@ -13,9 +13,9 @@ struct Trie {
     return int(tr.size()) - 1;
   }
 
-  void insert(const string &s) {
+  void update(const string &s, int d) {
     int u = 0;
-    tr[u].cnt++;
+    tr[u].cnt += d;
     for (char c : s) {
       int idx = c - 'a';
       if (!tr[u][idx]) {
@@ -23,22 +23,17 @@ struct Trie {
         tr[u][idx] = v;
       }
       u = tr[u][idx];
-      tr[u].cnt++;
+      tr[u].cnt += d;
     }
-    tr[u].ed++;
+    tr[u].ed += d;
   }
+
+  void insert(const string &s) { update(s, 1); }
 
   bool erase(const string &s) {
     int end = find(s);
     if (end == -1 || tr[end].ed == 0) return false;
-    int u = 0;
-    tr[u].cnt--;
-    for (char c : s) {
-      int idx = c - 'a';
-      u = tr[u][idx];
-      tr[u].cnt--;
-    }
-    tr[u].ed--;
+    update(s, -1);
     return true;
   }
 
