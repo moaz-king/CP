@@ -49,7 +49,7 @@
     "java": "cd $dir && javac $fileName && java $fileNameWithoutExt",
     "c": "cd $dir && gcc $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
     "zig": "zig run",
-    "cpp": "cd $dir && g++ -O2 -I\"C:\\Users\\mooaz\\OneDrive\\Documents\\cp\" $fileName -w -DLOCAL -o $fileNameWithoutExt \"-Wl,--stack,268435456\" && ./$fileNameWithoutExt",
+    "cpp": "cd $dir && g++ -O2 -I\"C:\\Users\\mooaz\\OneDrive\\Documents\\cp\" $fileName -DLOCAL -o $fileNameWithoutExt \"-Wl,--stack,268435456\" && ./$fileNameWithoutExt",
     "objective-c": "cd $dir && gcc -framework Cocoa $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
     "php": "php",
     "python": "python3 -u",
