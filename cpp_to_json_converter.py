@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 
-templates_dir = Path("templates")
+templates_dir = Path("./")
 output_file = Path("cpp.json")
 
 snippets = {}
