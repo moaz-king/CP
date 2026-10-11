@@ -2,7 +2,7 @@ struct Node {
   int64_t sum{};
   Node() { }
   Node(int64_t x) { sum = x; }
-  void operator=(const Node &other) { sum = other.sum; }
+  void operator=(const Node &other) { memcpy(this, &other, sizeof other); }
 };
 
 template <typename T, typename U, auto merge>
