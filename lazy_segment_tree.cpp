@@ -2,14 +2,14 @@ struct TreeNode {
   int64_t sum{};
   TreeNode() { }
   TreeNode(int64_t x) { sum = x; }
-  void operator=(const TreeNode &other) { sum = other.sum; }
+  void operator=(const TreeNode &other) { memcpy(this, &other, sizeof other); }
 };
 
 struct LazyNode {
   int64_t sum{};
   LazyNode() { }
   LazyNode(int64_t x) { sum = x; }
-  void operator=(const LazyNode &other) { sum = other.sum; }
+  void operator=(const LazyNode &other) { memcpy(this, &other, sizeof other); }
   bool operator==(const LazyNode &other) const { return sum == other.sum; }
 };
 
